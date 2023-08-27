@@ -1,0 +1,16 @@
+vim.o.hlsearch = false
+vim.wo.relativenumber = true
+vim.wo.number = true
+vim.o.clipboard = 'unnamedplus'
+vim.o.breakindent = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.bo.softtabstop = 2
+vim.opt.shell = 'bash.exe' 
+vim.opt.shellcmdflag = '-c'
+vim.opt.mouse = ''
+vim.wo.foldmethod = 'expr'
+vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
