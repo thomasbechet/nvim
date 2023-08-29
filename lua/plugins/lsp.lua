@@ -1,31 +1,7 @@
 return {
-  'VonHeikemen/lsp-zero.nvim',
-  branch = 'v2.x',
-  dependencies = {
-    {'neovim/nvim-lspconfig'},             -- Required
-    {'simrat39/rust-tools.nvim'},
-    {'williamboman/mason.nvim'},           -- Optional
-    {'williamboman/mason-lspconfig.nvim'}, -- Optional
-    {'hrsh7th/nvim-cmp'},     -- Required
-    {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-vsnip',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-buffer',
-      after = { 'hrsh7th/nvim-cmp' },
-      requires = { 'hrsh7th/nvim-cmp' },
-    },
-    {'hrsh7th/cmp-nvim-lsp'}, -- Required
-    {'L3MON4D3/LuaSnip'},     -- Required
-  },
-  config = function()
-    local lsp = require('lsp-zero').preset({})
-    lsp.preset('recommended')
-    lsp.ensure_installed({
-      'rust_analyzer',
-    })
-    local rt = require('rust-tools')
-    rt.setup({
+  {
+    'simrat39/rust-tools.nvim',
+    opts = {
       tools = {
         runnables = { use_telescope = true },
         inlay_hints = {
@@ -47,39 +23,71 @@ return {
             vim.keymap.set('n', '<Leader>a', rt.code_action_group.code_action_group, { buffer = bufnr })
           end
         }
-      })
-      local cmp = require('cmp')
-      cmp.setup({
-        preselect = cmp.PreselectMode.None,
-        snippet = {
-          expand = function(args)
-            vim.fn['vsnip#anonymous'](args.body)
-          end,
+      },
+    },
+    {
+      'hrsh7th/nvim-cmp',
+      config = function()
+        local cmp = require('cmp')
+        cmp.setup({
+          preselect = cmp.PreselectMode.None,
+          snippet = {
+            expand = function(args)
+              vim.fn['vsnip#anonymous'](args.body)
+            end,
+          },
+          mapping = {
+            ['<C-p>'] = cmp.mapping.select_prev_item(),
+            ['<C-n>'] = cmp.mapping.select_next_item(),
+            -- Add tab support
+            ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+            ['<Tab>'] = cmp.mapping.select_next_item(),
+            ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+            ['<C-f>'] = cmp.mapping.scroll_docs(4),
+            ['<C-Space>'] = cmp.mapping.complete(),
+            ['<C-e>'] = cmp.mapping.close(),
+            ['<CR>'] = cmp.mapping.confirm({
+              behavior = cmp.ConfirmBehavior.Insert,
+              select = true,
+            }),
+          },
+          sources = {
+            { name = 'nvim_lsp' },
+            { name = 'vsnip' },
+            { name = 'path' },
+            { name = 'buffer' },
+          },
+        })
+      end
+    },
+    {
+      'VonHeikemen/lsp-zero.nvim',
+      branch = 'v2.x',
+      dependencies = {
+        {'neovim/nvim-lspconfig'},             -- Required
+        {'simrat39/rust-tools.nvim'},
+        {'williamboman/mason.nvim'},           -- Optional
+        {'williamboman/mason-lspconfig.nvim'}, -- Optional
+        {'hrsh7th/nvim-cmp'},     -- Required
+        {
+          'hrsh7th/cmp-nvim-lsp',
+          'hrsh7th/cmp-vsnip',
+          'hrsh7th/cmp-path',
+          'hrsh7th/cmp-buffer',
+          after = { 'hrsh7th/nvim-cmp' },
+          requires = { 'hrsh7th/nvim-cmp' },
         },
-        mapping = {
-          ['<C-p>'] = cmp.mapping.select_prev_item(),
-          ['<C-n>'] = cmp.mapping.select_next_item(),
-          -- Add tab support
-          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-          ['<Tab>'] = cmp.mapping.select_next_item(),
-          ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-e>'] = cmp.mapping.close(),
-          ['<CR>'] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-          }),
-        },
-
-        -- Installed sources
-        sources = {
-          { name = 'nvim_lsp' },
-          { name = 'vsnip' },
-          { name = 'path' },
-          { name = 'buffer' },
-        },
-      })
-    end
+        {'hrsh7th/cmp-nvim-lsp'}, -- Required
+        {'L3MON4D3/LuaSnip'},     -- Required
+      },
+      opts = {},
+      config = function()
+        local lsp = require('lsp-zero').preset({})
+        lsp.preset('recommended')
+        lsp.ensure_installed({
+          'rust_analyzer',
+        })
+      end
+    }
   }
 
