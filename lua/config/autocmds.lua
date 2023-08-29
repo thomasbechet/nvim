@@ -1,7 +1,10 @@
-vim.api.nvim_create_autocmd('BufWritePost', {
+local format_sync_grp = vim.api.nvim_create_augroup("Format", {})
+vim.api.nvim_create_autocmd('BufWritePre', {
+  pattern = "*.rs",
   callback = function()
-    vim.lsp.buf.format()
-  end
+    vim.lsp.buf.format({ timeout_ms = 200 })
+  end,
+  group = format_sync_grp,
 })
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -32,3 +35,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
   end,
 })
+
+local diag_float_grp = vim.api.nvim_create_augroup("DiagnosticFloat", { clear = true })
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.diagnostic.open_float(nil, { focusable = false })
+  end,
+  group = diag_float_grp,
+})
+
+vim.keymap.set("n", "g[", vim.diagnostic.goto_prev, keymap_opts)
+vim.keymap.set("n", "g]", vim.diagnostic.goto_next, keymap_opts)
