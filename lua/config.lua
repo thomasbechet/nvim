@@ -10,6 +10,8 @@ vim.wo.number = true
 vim.opt.mouse = ''
 -- Allow hidden buffers
 vim.opt.hidden = true
+-- Terminal exit remap
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
 -- Lsp Configuration
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
@@ -25,7 +27,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
     vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', 'gl', vim.diagnostic.open_float, opts)
+    vim.keymap.set('n', 'K', vim.diagnostic.open_float, opts)
     vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<space>a', vim.lsp.buf.code_action, opts)
     vim.keymap.set('n', '<space>f', function()

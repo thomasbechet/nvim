@@ -16,7 +16,7 @@ return {
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
         { name = 'nvim_lua' },
-        { name = 'buffer', --[[ keyword_length = 3 ]] },
+        { name = 'buffer' },
       }),
       snippet = {
         expand = function(args)
