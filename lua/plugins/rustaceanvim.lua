@@ -3,6 +3,6 @@ return {
   dependencies = {
     'mfussenegger/nvim-dap'
   },
-  version = '^4', -- Recommended
+  version = '^4',
   ft = { 'rust' },
 }

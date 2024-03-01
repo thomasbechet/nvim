@@ -15,8 +15,8 @@ return {
     vim.keymap.set("n", "<leader>dl", function() require('dap').step_into() end)
     vim.keymap.set("n", "<leader>dR", function() require('dap').repl.open({}) end)
     vim.keymap.set("n", "<leader>dr", function() require("dap").restart() end)
-    vim.keymap.set({'n', 'v'}, '<leader>dh', function() require('dap.ui.widgets').hover() end)
-    vim.keymap.set({'n', 'v'}, '<leader>dp', function() require('dap.ui.widgets').preview() end)
+    vim.keymap.set({ 'n', 'v' }, '<leader>dh', function() require('dap.ui.widgets').hover() end)
+    vim.keymap.set({ 'n', 'v' }, '<leader>dp', function() require('dap.ui.widgets').preview() end)
     vim.keymap.set('n', '<leader>df', function()
       local widgets = require('dap.ui.widgets')
       widgets.centered_float(widgets.frames)
@@ -30,28 +30,27 @@ return {
     local dap = require('dap')
 
     dap.adapters.codelldb = {
-        type = "server",
-        port = "${port}",
-        executable = {
-            command = '/usr/bin/codelldb',
-            args = { "--port", "${port}" },
-            detached = false,
-        }
+      type = "server",
+      port = "${port}",
+      executable = {
+        command = '/usr/bin/codelldb',
+        args = { "--port", "${port}" },
+        detached = false,
+      }
     }
 
-   -- Default debug configuration for C, C++
-   dap.configurations.rust = {
-       {
-           name = "Debug an Executable",
-           type = "codelldb",
-           request = "launch",
-           program = function()
-               return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
-           end,
-           cwd = "${workspaceFolder}",
-           stopOnEntry = false,
-       },
-   }
-
+    -- Default debug configuration for C, C++
+    dap.configurations.rust = {
+      {
+        name = "Debug an Executable",
+        type = "codelldb",
+        request = "launch",
+        program = function()
+          return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. '/', "file")
+        end,
+        cwd = "${workspaceFolder}",
+        stopOnEntry = false,
+      },
+    }
   end
 }

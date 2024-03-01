@@ -31,8 +31,8 @@ return {
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
         ["<Tab>"] = cmp.mapping.confirm({
-           behavior = cmp.ConfirmBehavior.Replace,
-           select = true,
+          behavior = cmp.ConfirmBehavior.Replace,
+          select = true,
         }),
       }),
     })
