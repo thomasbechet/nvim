@@ -4,12 +4,14 @@ return {
   dependencies = {
     "williamboman/mason-lspconfig.nvim",
     "williamboman/mason.nvim",
+    "lvimuser/lsp-inlayhints.nvim"
   },
   config = function()
     require("mason").setup()
     require("mason-lspconfig").setup({
       ensure_installed = { "lua_ls", "rust_analyzer" },
     })
+    require("lsp-inlayhints").setup()
 
     local lspconfig = require("lspconfig")
     lspconfig.lua_ls.setup({
@@ -32,6 +34,11 @@ return {
       callback = function(ev)
         -- Enable completion triggered by <c-x><c-o>
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+        -- Enable inlayhints
+        local bufnr = ev.buf
+        local client = vim.lsp.get_client_by_id(ev.data.client_id)
+        require("lsp-inlayhints").on_attach(client, bufnr)
 
         -- Buffer local mappings.
         local opts = { buffer = ev.buf }
