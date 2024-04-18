@@ -12,3 +12,8 @@ vim.opt.mouse = ''
 vim.opt.hidden = true
 -- Terminal exit remap
 vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
+-- Ident options
+vim.opt.smartindent = true
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 4
+vim.opt.tabstop = 4
