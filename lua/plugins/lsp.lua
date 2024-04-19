@@ -29,6 +29,8 @@ return {
     })
 
     require("lspconfig").clangd.setup({})
+    -- Disable preprocessor grayed highlight
+    vim.api.nvim_set_hl(0, '@lsp.type.comment.cpp', {})
 
     -- Lsp Configuration
     vim.api.nvim_create_autocmd('LspAttach', {
