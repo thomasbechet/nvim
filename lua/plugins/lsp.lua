@@ -28,14 +28,16 @@ return {
       }
     })
 
+    local capabilities = require('cmp_nvim_lsp').default_capabilities()
     require("lspconfig").clangd.setup({
-      capabilities = {
+      capabilities = capabilities
+      --[[ capabilities = {
         textDocument = {
           inactiveRegionsCapabilities = {
             inactiveRegions = true,
           },
         },
-      },
+      }, ]]
     })
 
     -- Lsp Configuration
