@@ -4,7 +4,7 @@ return {
   config = function()
     require('nvim-treesitter.configs').setup({
       auto_install = true,
-      ensure_installed = { 'rust', 'lua', 'vim' },
+      ensure_installed = { 'rust', 'lua', 'vim', 'glsl' },
     })
   end
 }
