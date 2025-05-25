@@ -9,7 +9,7 @@ return {
   config = function()
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "rust_analyzer", "clangd" },
+      ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "glsl_analyzer" },
     })
     require("lsp-inlayhints").setup()
 
@@ -17,6 +17,12 @@ return {
     lspconfig.lua_ls.setup({
       settings = {
         Lua = {
+          workspace = {
+            library = vim.api.nvim_get_runtime_file("", true),
+          },
+          diagnostic = {
+            globals = { "vim", "nux" }
+          },
           format = {
             enable = true,
             defaultConfig = {
@@ -27,8 +33,7 @@ return {
         }
       }
     })
-
-    lspconfig.ts_ls.setup {}
+    lspconfig.glsl_analyzer.setup {}
 
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
     require("lspconfig").clangd.setup({
