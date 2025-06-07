@@ -13,6 +13,11 @@ return {
     })
 
     local lspconfig = require("lspconfig")
+
+    -- Clangd
+    lspconfig.clangd.setup({})
+
+    -- Lua
     lspconfig.lua_ls.setup({
       settings = {
         Lua = {
@@ -32,19 +37,9 @@ return {
         }
       }
     })
-    lspconfig.glsl_analyzer.setup {}
 
-    local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require("lspconfig").clangd.setup({
-      capabilities = capabilities
-      --[[ capabilities = {
-        textDocument = {
-          inactiveRegionsCapabilities = {
-            inactiveRegions = true,
-          },
-        },
-      }, ]]
-    })
+    -- GLSL
+    lspconfig.glsl_analyzer.setup {}
 
     -- Lsp Configuration
     vim.api.nvim_create_autocmd('LspAttach', {
