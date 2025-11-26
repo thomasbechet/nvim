@@ -8,24 +8,32 @@ return {
   config = function()
     require("mason").setup()
     require("mason-lspconfig").setup({
-      ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "glsl_analyzer" },
+      ensure_installed = { "lua_ls", "rust_analyzer", "clangd", "glsl_analyzer", "zls" },
       automatic_enable = false,
     })
 
     local lspconfig = require("lspconfig")
 
     -- Clangd
-    lspconfig.clangd.setup({})
+    lspconfig.clangd.setup({
+      init_options = {
+        fallbackFlags = { '--std=c23' }
+      }
+    })
 
     -- Lua
     lspconfig.lua_ls.setup({
       settings = {
         Lua = {
           workspace = {
-            library = vim.api.nvim_get_runtime_file("", true),
+            library = {
+              vim.api.nvim_get_runtime_file("", true),
+              "/home/thomas/Projects/nux/core/lua/lsp"
+            }
           },
-          diagnostic = {
-            globals = { "vim", "nux" }
+          diagnostics = {
+            globals = { "vim" },
+            disable = { "duplicate-set-field" }
           },
           format = {
             enable = true,
@@ -40,6 +48,9 @@ return {
 
     -- GLSL
     lspconfig.glsl_analyzer.setup {}
+
+    -- Zig
+    vim.lsp.enable('zls')
 
     -- Lsp Configuration
     vim.api.nvim_create_autocmd('LspAttach', {
