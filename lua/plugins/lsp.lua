@@ -12,17 +12,16 @@ return {
       automatic_enable = false,
     })
 
-    local lspconfig = require("lspconfig")
-
     -- Clangd
-    lspconfig.clangd.setup({
+    vim.lsp.config("clangd", {
       init_options = {
         fallbackFlags = { '--std=c23' }
       }
     })
+    vim.lsp.enable("clangd")
 
     -- Lua
-    lspconfig.lua_ls.setup({
+    vim.lsp.config("lua_ls", {
       settings = {
         Lua = {
           workspace = {
@@ -45,16 +44,18 @@ return {
         }
       }
     })
+    vim.lsp.enable("lua_ls")
 
     -- GLSL
-    lspconfig.glsl_analyzer.setup {}
+    vim.lsp.config("glsl_analyzer", {})
+    vim.lsp.enable("glsl_analyzer")
 
     -- Zig
-    lspconfig.zls.setup {
+    vim.lsp.config("zls", {
       -- Server-specific settings. See `:help lspconfig-setup`
 
       -- omit the following line if `zls` is in your PATH
-      -- cmd = { '/path/to/zls_executable' },
+      cmd = { '/home/thomas/Projects/zls-0.15.1/zls' },
       -- There are two ways to set config options:
       --   - edit your `zls.json` that applies to any editor that uses ZLS
       --   - set in-editor config options with the `settings` field below.
@@ -71,11 +72,32 @@ return {
           semantic_tokens = "partial",
 
           -- omit the following line if `zig` is in your PATH
-          -- zig_exe_path = '/path/to/zig_executable'
+          -- zig_exe_path = '/home/thomas/Projects/zig-x86_64-linux-0.16.0/zig'
+          zig_exe_path = '/home/thomas/Projects/zig-x86_64-linux-0.15.2/zig'
         }
       }
-    }
+    })
+    vim.lsp.enable("zls")
 
+    -- Wren
+    vim.filetype.add({
+      extension = {
+        wren = "wren",
+      },
+    })
+    local configs = require("lspconfig.configs")
+    if not configs.wren_lsp then
+      configs.wren_lsp = {
+        default_config = {
+          cmd = { "wren-lsp" },
+          filetypes = { "wren" },
+          root_dir = "/home/thomas/Projects/nux2/core/wren"
+          -- lspconfig.util.root_pattern(".git"),
+        },
+      }
+    end
+    vim.lsp.config("wren_lsp", {})
+    vim.lsp.enable("wren_lsp")
 
     -- Lsp Configuration
     vim.api.nvim_create_autocmd('LspAttach', {
