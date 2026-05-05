@@ -85,18 +85,12 @@ return {
         wren = "wren",
       },
     })
-    local configs = require("lspconfig.configs")
-    if not configs.wren_lsp then
-      configs.wren_lsp = {
-        default_config = {
-          cmd = { "wren-lsp" },
-          filetypes = { "wren" },
-          root_dir = "/home/thomas/Projects/nux2/core/wren"
-          -- lspconfig.util.root_pattern(".git"),
-        },
-      }
-    end
-    vim.lsp.config("wren_lsp", {})
+    vim.lsp.config("wren_lsp", {
+      cmd = { "wren-lsp" },
+      filetypes = { "wren" },
+      root_dir = "/home/thomas/Projects/nux2/core/wren"
+      -- lspconfig.util.root_pattern(".git"),
+    })
     vim.lsp.enable("wren_lsp")
 
     -- Lsp Configuration
