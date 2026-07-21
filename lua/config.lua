@@ -17,3 +17,13 @@ vim.opt.smartindent = true
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
 vim.opt.tabstop = 4
+-- Auto reload
+vim.opt.autoread = true
+vim.opt.updatetime = 300
+vim.api.nvim_create_autocmd(
+  { "FocusGained", "BufEnter", "CursorHold", "CursorHoldI", "TermLeave", "WinEnter" },
+  {
+    pattern = "*",
+    command = "checktime",
+  }
+)

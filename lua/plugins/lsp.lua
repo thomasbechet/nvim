@@ -53,12 +53,12 @@ return {
     -- Zig
     vim.lsp.config("zls", {
       -- omit the following line if `zls` is in your PATH
-      cmd = { '/home/thomas/Projects/zls-0.15.1/zls' },
+      cmd = { '/home/thomas/Projects/zls-0.16.0/zls' },
       settings = {
         zls = {
           enable_build_on_save = true,
           semantic_tokens = "partial",
-          zig_exe_path = '/home/thomas/Projects/zig-x86_64-linux-0.15.2/zig'
+          zig_exe_path = '/home/thomas/Projects/zig-x86_64-linux-0.16.0/zig'
         }
       }
     })
