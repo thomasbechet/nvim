@@ -1,11 +1,20 @@
 return {
   'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
+  lazy = false,
   build = ':TSUpdate',
   config = function()
-    require('nvim-treesitter.configs').setup({
-      auto_install = true,
-      ensure_installed = { 'rust', 'lua', 'vim', 'glsl', 'odin' },
-      highlight = { enable = true },
+    local treesitter = require('nvim-treesitter')
+    treesitter.setup({ install_dir = vim.fn.stdpath('data') .. '/site' })
+
+    local languages = { 'rust', 'lua', 'vim', 'glsl', 'odin' }
+    treesitter.install(languages)
+
+    vim.api.nvim_create_autocmd('FileType', {
+      pattern = languages,
+      callback = function()
+        vim.treesitter.start()
+      end,
     })
   end
 }
